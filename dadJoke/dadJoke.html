@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dad Joke</title>
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            width: 60%;
+            margin: 0 auto;
+        }
+        button{
+            background-color: darkred;
+            color: white;
+            font-size: 130%;
+
+           
+        
+        }
+        li{
+            background-color: darkblue;
+            border: 2px solid rgb(236, 232, 232);
+            color: white;
+            margin: 5px -40px;
+            padding: 3px;
+        }
+
+        #heading{
+            background-color: white;
+            position: fixed;
+            top: 0;
+            width: 100%;
+         
+            
+        }
+
+        ul{
+            margin-top: 130px;
+        }
+    
+        
+      
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div id="heading">
+        <h1>Click the button to get new jokes</h1>
+        <button>Click</button>
+    </div>
+
+        <ul id="jokes"></ul>
+   
+    <script>
+        const jokes = document.querySelector("#jokes");
+        const button = document.querySelector("button");
+        const getDadJoke = async () =>{
+            try {
+            const config = {headers: { Accept: "application/json"}}
+            const res = await axios.get ("https://icanhazdadjoke.com/", config)
+            //console.log(res.data.joke)
+            return res.data.joke;
+            
+            }
+            catch (e) {
+                return "Sorry, no jokes available";
+            }
+        }
+        const showJokes = async ()=>{
+            const jokeText = await getDadJoke();
+            const newLi = document.createElement("Li");
+            newLi.append(jokeText);
+            jokes.append(newLi);
+        }
+        
+        button.addEventListener("click", showJokes)
+    </script>
+</body>
+</html>
